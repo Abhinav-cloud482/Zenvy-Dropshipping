@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "Product": {
+      "title": "Product",
+      "description": "A product available for dropshipping",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Product name" },
+        "description": { "type": "string", "description": "Product description" },
+        "price": { "type": "number", "description": "Product price" },
+        "image": { "type": "string", "description": "URL to product image" },
+        "category": { "type": "string", "description": "Product category" },
+        "stock": { "type": "number", "description": "Available stock" },
+        "rating": { "type": "number", "description": "Average rating" },
+        "reviewsCount": { "type": "number", "description": "Number of reviews" }
+      },
+      "required": ["name", "price", "image", "category"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "A customer order",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "UID of the customer" },
+        "items": { "type": "array", "description": "List of items in the order" },
+        "totalAmount": { "type": "number", "description": "Total order amount" },
+        "status": { "type": "string", "enum": ["pending", "processing", "shipped", "delivered", "cancelled"] },
+        "shippingAddress": { "type": "object", "description": "Shipping address details" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "items", "totalAmount", "status", "createdAt"]
+    },
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "customer"] },
+        "displayName": { "type": "string" }
+      },
+      "required": ["email", "role"]
+    },
+    "SiteSettings": {
+      "title": "Site Settings",
+      "description": "Global website configuration",
+      "type": "object",
+      "properties": {
+        "siteName": { "type": "string" },
+        "heroBanner": { "type": "string" },
+        "contactEmail": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "/products/{productId}": { "schema": "Product", "description": "Collection of products" },
+    "/orders/{orderId}": { "schema": "Order", "description": "Collection of orders" },
+    "/users/{userId}": { "schema": "User", "description": "User profiles and roles" },
+    "/settings/global": { "schema": "SiteSettings", "description": "Global configuration" }
+  }
+}
